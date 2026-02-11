@@ -1,0 +1,30 @@
+# --- Python & Virtual Environments ---
+__pycache__/
+*.py[cod]
+venv/
+.env
+
+# --- Model Weights ---
+*.safetensors
+*.pth
+*.bin
+*.h5
+pragna-1b/
+huggingface/
+
+# --- C++ & CUDA Build Artifacts ---
+*.o
+*.so
+*.a
+*.exe
+build/
+dist/
+
+# --- Executable Binaries (test files here) ---
+test_cuda
+benchmark_runner
+
+# --- IDE Settings ---
+.vscode/
+.idea/
+*.swp
