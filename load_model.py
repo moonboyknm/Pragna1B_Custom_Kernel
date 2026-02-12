@@ -1,21 +1,34 @@
 import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
+import os
+
+from transformers import AutoModelForCausalLM, AutoTokenizer, logging
+
+logging.set_verbosity_error()
 
 model_path = "./pragna-1b"
+device = "cuda"
 
-print(f"Loading model from {model_path}...")
-
-# 1. Load Tokenizer
-tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
-
-# 2. Load Model 
-# Using float16
+# Load Model
 model = AutoModelForCausalLM.from_pretrained(
-    model_path, 
-    torch_dtype=torch.float16, 
-    device_map="cuda",
-    local_files_only=True
+    model_path,
+    dtype=torch.float16, 
+    device_map="auto"
 )
+tokenizer = AutoTokenizer.from_pretrained(model_path)
 
-print(f"Success! Model loaded on {torch.cuda.get_device_name(0)}")
-print(f"Memory Allocated: {torch.cuda.memory_allocated() / 1024**2:.2f} MB")
+# Prepare Inference
+prompt = "The capital of India is"
+inputs = tokenizer(prompt, return_tensors="pt").to(device)
+
+print("Generating...")
+with torch.no_grad():
+    outputs = model.generate(
+        **inputs, 
+        max_new_tokens=50,
+        do_sample=True,      
+        temperature=0.7,     
+        top_k=50,            
+        repetition_penalty=1.1 
+    )
+
+print("\n" + tokenizer.decode(outputs[0], skip_special_tokens=True))
