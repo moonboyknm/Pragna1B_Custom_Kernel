@@ -31,7 +31,6 @@ demo = gr.ChatInterface(
     fn=predict,
     title="Pragna-1B Chat",
     description="Local inference running on RTX 2050",
-    examples=["What are the states in India?", "Explain CUDA in simple terms."]
 )
 
 if __name__ == "__main__":
