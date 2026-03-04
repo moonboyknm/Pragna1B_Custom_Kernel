@@ -1,0 +1,5 @@
+Alright so I've profiled the triton kernel for pragna-1b and now my goal is to learn how to make a better kernel in cuda.
+
+these are what my goals should be:
+
+(Taking in mind the popular advice from the GPU Mode community, I should try to learn everything about this project related to CUDA and C++)
